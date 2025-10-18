@@ -1,6 +1,7 @@
 package org.docstream.infra.mapper;
 
 import org.docstream.domain.VendaDeCarro;
+import org.docstream.infra.controller.request.VendaDeCarroRequest;
 import org.docstream.infra.persistence.VendaDeCarroEntity;
 
 public class VendaDeCarroMapper {
@@ -12,5 +13,14 @@ public class VendaDeCarroMapper {
         venda.setPrice(vendaDeCarro.getPrice());
         venda.setAnoDeFabricacao(vendaDeCarro.getAnoDeFabricacao());
         return venda;
+    }
+
+    public static VendaDeCarro toDomain(VendaDeCarroRequest request) {
+        VendaDeCarro vendaDeCarro = new VendaDeCarro();
+        vendaDeCarro.setMarca(request.marca());
+        vendaDeCarro.setNome(request.nome());
+        vendaDeCarro.setPrice(request.price());
+        vendaDeCarro.setAnoDeFabricacao(request.anoDeFabricacao());
+        return vendaDeCarro;
     }
 }
