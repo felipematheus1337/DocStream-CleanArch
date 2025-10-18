@@ -1,6 +1,7 @@
 package org.docstream.infra.controller;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
@@ -15,6 +16,7 @@ public class VendaDeCarroController {
 
     private final CriarVendaDeCarroJSON criarVendaDeCarroJSON;
 
+    @Inject
     public VendaDeCarroController(CriarVendaDeCarroJSON criarVendaDeCarroJSON) {
         this.criarVendaDeCarroJSON = criarVendaDeCarroJSON;
     }
