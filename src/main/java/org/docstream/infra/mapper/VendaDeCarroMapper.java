@@ -3,6 +3,7 @@ package org.docstream.infra.mapper;
 import org.docstream.domain.VendaDeCarro;
 import org.docstream.infra.controller.request.VendaDeCarroRequest;
 import org.docstream.infra.persistence.VendaDeCarroEntity;
+import org.docstream.infra.persistence.VendaDeCarroXML;
 
 public class VendaDeCarroMapper {
 
@@ -22,5 +23,14 @@ public class VendaDeCarroMapper {
         vendaDeCarro.setPrice(request.price());
         vendaDeCarro.setAnoDeFabricacao(request.anoDeFabricacao());
         return vendaDeCarro;
+    }
+
+    public static VendaDeCarroEntity xmlToEntity(VendaDeCarroXML vendaDeCarroXML) {
+        VendaDeCarroEntity entity = new VendaDeCarroEntity();
+        entity.setNome(vendaDeCarroXML.getNome());
+        entity.setMarca(vendaDeCarroXML.getMarca());
+        entity.setPrice(vendaDeCarroXML.getPrice());
+        entity.setAnoDeFabricacao(vendaDeCarroXML.getAnoDeFabricacao());
+        return entity;
     }
 }
