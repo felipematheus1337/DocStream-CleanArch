@@ -1,7 +1,7 @@
 package org.docstream.application.usecases;
 
 import org.docstream.application.exceptions.DomainException;
-import org.docstream.application.gateway.VendaDeCarroGatewayJSON;
+import org.docstream.application.gateways.VendaDeCarroGatewayJSON;
 import org.docstream.domain.VendaDeCarro;
 
 import java.math.BigDecimal;

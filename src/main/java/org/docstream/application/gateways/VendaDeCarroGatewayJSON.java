@@ -1,4 +1,4 @@
-package org.docstream.application.gateway;
+package org.docstream.application.gateways;
 
 import org.docstream.domain.VendaDeCarro;
 
