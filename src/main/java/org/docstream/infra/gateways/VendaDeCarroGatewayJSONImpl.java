@@ -13,7 +13,7 @@ import org.docstream.infra.persistence.VendaDeCarroRepository;
 @ApplicationScoped
 public class VendaDeCarroGatewayJSONImpl implements VendaDeCarroGatewayJSON {
 
-    private final VendaDeCarroRepository repository;
+    private VendaDeCarroRepository repository;
     private static final Logger logger = LoggerFactory.getLogger(VendaDeCarroGatewayJSONImpl.class);
 
     @Inject

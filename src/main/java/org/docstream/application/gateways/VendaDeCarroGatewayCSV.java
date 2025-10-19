@@ -1,6 +1,5 @@
 package org.docstream.application.gateways;
 
-import io.vertx.ext.web.FileUpload;
 
 import java.io.InputStream;
 

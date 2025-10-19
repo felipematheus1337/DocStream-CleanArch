@@ -17,9 +17,9 @@ import java.util.List;
 @ApplicationScoped
 public class VendaDeCarroGatewayCSVImpl implements VendaDeCarroGatewayCSV  {
 
-    private final VendaDeCarroRepository repository;
-    private final SerializadorDeArquivosCSVService csvService;
-    private final FilePublisherService filePublisherService;
+    private VendaDeCarroRepository repository;
+    private SerializadorDeArquivosCSVService csvService;
+    private FilePublisherService filePublisherService;
 
     @Inject
     public VendaDeCarroGatewayCSVImpl(VendaDeCarroRepository repository, SerializadorDeArquivosCSVService csvService, FilePublisherService filePublisherService) {

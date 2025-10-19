@@ -16,9 +16,9 @@ import java.io.InputStream;
 public class VendaDeCarroGatewayXMLImpl implements VendaDeCarroGatewayXML {
 
 
-    private final VendaDeCarroRepository repository;
-    private final SerializadorDeArquivosXMLService serializadorDeArquivosXMLService;
-    private final FilePublisherService filePublisherService;
+    private VendaDeCarroRepository repository;
+    private SerializadorDeArquivosXMLService serializadorDeArquivosXMLService;
+    private FilePublisherService filePublisherService;
 
     @Inject
     public VendaDeCarroGatewayXMLImpl(VendaDeCarroRepository repository, SerializadorDeArquivosXMLService serializadorDeArquivosXMLService, FilePublisherService filePublisherService) {

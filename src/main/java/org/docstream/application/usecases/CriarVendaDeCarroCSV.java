@@ -1,7 +1,6 @@
 package org.docstream.application.usecases;
 
 import org.docstream.application.gateways.VendaDeCarroGatewayCSV;
-import org.docstream.infra.service.SerializadorDeArquivosCSVService;
 
 import java.io.InputStream;
 

@@ -22,9 +22,9 @@ import java.io.InputStream;
 @Path("/vendas")
 public class VendaDeCarroController {
 
-    private final CriarVendaDeCarroJSON criarVendaDeCarroJSON;
-    private final CriarVendaDeCarroXML criarVendaDeCarroXML;
-    private final CriarVendaDeCarroCSV criarVendaDeCarroCSV;
+    private CriarVendaDeCarroJSON criarVendaDeCarroJSON;
+    private CriarVendaDeCarroXML criarVendaDeCarroXML;
+    private CriarVendaDeCarroCSV criarVendaDeCarroCSV;
 
     @Inject
     public VendaDeCarroController(CriarVendaDeCarroJSON criarVendaDeCarroJSON, CriarVendaDeCarroXML criarVendaDeCarroXML, CriarVendaDeCarroCSV criarVendaDeCarroCSV) {
