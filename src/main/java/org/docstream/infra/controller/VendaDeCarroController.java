@@ -4,15 +4,19 @@ import io.vertx.ext.web.FileUpload;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.docstream.application.usecases.CriarVendaDeCarroCSV;
 import org.docstream.application.usecases.CriarVendaDeCarroJSON;
 import org.docstream.application.usecases.CriarVendaDeCarroXML;
 import org.docstream.domain.VendaDeCarro;
 import org.docstream.infra.controller.request.VendaDeCarroRequest;
 import org.docstream.infra.mapper.VendaDeCarroMapper;
+
+import java.io.InputStream;
 
 @ApplicationScoped
 @Path("/vendas")
@@ -20,11 +24,13 @@ public class VendaDeCarroController {
 
     private final CriarVendaDeCarroJSON criarVendaDeCarroJSON;
     private final CriarVendaDeCarroXML criarVendaDeCarroXML;
+    private final CriarVendaDeCarroCSV criarVendaDeCarroCSV;
 
     @Inject
-    public VendaDeCarroController(CriarVendaDeCarroJSON criarVendaDeCarroJSON, CriarVendaDeCarroXML criarVendaDeCarroXML) {
+    public VendaDeCarroController(CriarVendaDeCarroJSON criarVendaDeCarroJSON, CriarVendaDeCarroXML criarVendaDeCarroXML, CriarVendaDeCarroCSV criarVendaDeCarroCSV) {
         this.criarVendaDeCarroJSON = criarVendaDeCarroJSON;
         this.criarVendaDeCarroXML = criarVendaDeCarroXML;
+        this.criarVendaDeCarroCSV = criarVendaDeCarroCSV;
     }
 
     @POST
@@ -37,9 +43,17 @@ public class VendaDeCarroController {
 
     @POST
     @Path("/xml")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response criarCarroViaXML(FileUpload fileUpload) {
-        criarVendaDeCarroXML.executar(fileUpload);
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response criarCarroViaXML(InputStream inputStream) {
+        criarVendaDeCarroXML.executar(inputStream);
+        return Response.accepted().build();
+    }
+
+    @POST
+    @Path("/csv")
+    @Consumes(MediaType.APPLICATION_OCTET_STREAM)
+    public Response criarCarroViaCSV(InputStream inputStream) {
+        criarVendaDeCarroCSV.executar(inputStream);
         return Response.accepted().build();
     }
 

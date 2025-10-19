@@ -4,6 +4,8 @@ import io.vertx.ext.web.FileUpload;
 import org.docstream.application.exceptions.DomainException;
 import org.docstream.application.gateways.VendaDeCarroGatewayXML;
 
+import java.io.InputStream;
+
 public class CriarVendaDeCarroXML {
 
     private final VendaDeCarroGatewayXML vendaDeCarroGatewayXML;
@@ -12,11 +14,7 @@ public class CriarVendaDeCarroXML {
         this.vendaDeCarroGatewayXML = vendaDeCarroGatewayXML;
     }
 
-    public void executar(FileUpload fileUpload) {
-        if (!fileUpload.contentType().contains("xml")) {
-            throw new DomainException("Necessário arquivo XML.");
-        }
-
-        vendaDeCarroGatewayXML.persistir(fileUpload);
+    public void executar(InputStream inputStream) {
+        vendaDeCarroGatewayXML.persistir(inputStream);
     }
 }

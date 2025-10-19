@@ -10,6 +10,8 @@ import org.docstream.infra.persistence.VendaDeCarroRepository;
 import org.docstream.infra.persistence.VendaDeCarroXML;
 import org.docstream.infra.service.SerializadorDeArquivosXMLService;
 
+import java.io.InputStream;
+
 @ApplicationScoped
 public class VendaDeCarroGatewayXMLImpl implements VendaDeCarroGatewayXML {
 
@@ -23,14 +25,14 @@ public class VendaDeCarroGatewayXMLImpl implements VendaDeCarroGatewayXML {
     }
 
     @Override
-    public void persistir(FileUpload fileUpload) {
+    public void persistir(InputStream inputStream) {
          try {
-             VendaDeCarroXML xml = serializadorDeArquivosXMLService.serializar(fileUpload, VendaDeCarroXML.class);
+             VendaDeCarroXML xml = serializadorDeArquivosXMLService.serializar(inputStream, VendaDeCarroXML.class);
              VendaDeCarroEntity entity = VendaDeCarroMapper.xmlToEntity(xml);
              repository.persist(entity);
 
          } catch(Exception e) {
-             throw new RuntimeException();
+             throw new RuntimeException("Erro ao persistir..", e);
          }
 
     }

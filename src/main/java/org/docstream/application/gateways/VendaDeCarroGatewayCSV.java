@@ -4,7 +4,7 @@ import io.vertx.ext.web.FileUpload;
 
 import java.io.InputStream;
 
-public interface VendaDeCarroGatewayXML {
+public interface VendaDeCarroGatewayCSV {
 
     void persistir(InputStream inputStream);
 }
