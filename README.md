@@ -1,69 +1,116 @@
-# code-with-quarkus
+DocStream-CleanArch
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+DocStream-CleanArch é um serviço de ingestão de documentos (XML e CSV) para armazenamento e processamento assíncrono, utilizando Quarkus, MongoDB, AWS S3 e Kafka. O projeto segue os princípios da Clean Architecture, promovendo uma estrutura modular, testável e de fácil manutenção.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+🚀 Funcionalidades
 
-## Running the application in dev mode
+Recepção de Arquivos: Permite o upload de arquivos XML e CSV via endpoints REST.
 
-You can run your application in dev mode that enables live coding using:
+Processamento Assíncrono: Processa os arquivos de forma assíncrona, garantindo alta performance.
 
-```shell script
-./mvnw quarkus:dev
-```
+Armazenamento de Dados: Armazena os dados extraídos no MongoDB.
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+Armazenamento de Arquivos: Armazena os arquivos brutos no AWS S3.
 
-## Packaging and running the application
+Publicação de Eventos: Publica eventos de processamento no Kafka para integração com outros sistemas.
 
-The application can be packaged using:
+🧩 Arquitetura
 
-```shell script
-./mvnw package
-```
+O projeto segue os princípios da Clean Architecture, com a seguinte estrutura:
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+src/main/java/com/lipe/docstream
+│
+├── domain/             # Entidades de negócio puras e interfaces (ports)
+│   ├── model/          # Entidades de domínio
+│   └── repository/     # Interfaces de persistência
+│
+├── application/        # Casos de uso (UseCases) e lógica de negócio
+│
+├── infra/              # Implementações concretas (Mongo, S3, Kafka, parsers)
+│   ├── persistence/    # Repositórios Mongo
+│   ├── storage/        # Upload S3
+│   ├── messaging/      # Kafka Producers / Consumers
+│   └── parser/         # XML / CSV parsers
+│
+└── presentation/       # Controllers REST
+├── XmlController.java
+└── CsvController.java
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+⚙️ Tecnologias Utilizadas
 
-If you want to build an _über-jar_, execute the following command:
+Java 17
 
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
+Quarkus 3.x
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+MongoDB (via Quarkus Panache)
 
-## Creating a native executable
+Kafka (SmallRye Reactive Messaging)
 
-You can create a native executable using:
+AWS S3 (SDK Java)
 
-```shell script
-./mvnw package -Dnative
-```
+JAXB (XML parsing)
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
+OpenCSV (CSV parsing)
 
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
+JUnit5 + RestAssured (Testes)
 
-You can then execute your native executable with: `./target/code-with-quarkus-1.0.0-SNAPSHOT-runner`
+🐳 Ambiente Local
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+Para rodar o ambiente localmente, utilize o Docker Compose para subir os serviços do MongoDB e Kafka:
 
-## Related Guides
+docker-compose up -d
 
-- MongoDB with Panache ([guide](https://quarkus.io/guides/mongodb-panache)): Simplify your persistence code for MongoDB via the active record or the repository pattern
-- Logging JSON Jackson ([guide](https://docs.quarkiverse.io/quarkus-logging-json/dev/index.html)): Logging in JSON with support for custom fields and Elastic Common Schema (ECS)
-- Apache Kafka Client ([guide](https://quarkus.io/guides/kafka)): Connect to Apache Kafka with its native API
-- RESTEasy Classic ([guide](https://quarkus.io/guides/resteasy)): REST endpoint framework implementing Jakarta REST and more
 
-## Provided Code
+MongoDB: mongodb://root:root@localhost:27017
 
-### RESTEasy JAX-RS
+Kafka: localhost:29092
 
-Easily start your RESTful Web Services
+Zookeeper: localhost:2181
 
-[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+⚙️ Configurações
+
+As configurações de MongoDB, Kafka e S3 estão localizadas em:
+
+src/main/resources/application.properties
+
+
+Inclui:
+
+Strings de conexão MongoDB
+
+Bootstrap servers Kafka
+
+Serializers / Deserializers
+
+Config AWS S3 (bucket, region, credentials)
+
+📦 Rodando o Projeto
+
+Suba os containers Docker (Mongo + Kafka)
+
+Compile e rode o projeto Quarkus:
+
+./mvnw clean compile quarkus:dev
+
+
+Endpoints disponíveis:
+
+POST /xml/upload → recebe XML
+
+POST /csv/upload → recebe CSV
+
+🧪 Testes
+
+Unitários com JUnit5
+
+Integração REST com RestAssured
+
+Testes de integração podem usar o MongoDB e Kafka rodando no Docker
+
+📚 Conceitos
+
+Arquitetura limpa (Clean Architecture)
+
+Separação de responsabilidades: Controller → UseCase → Gateway → Infra
+
+Entidade de domínio isolada de frameworks e tecnologia de persistência
