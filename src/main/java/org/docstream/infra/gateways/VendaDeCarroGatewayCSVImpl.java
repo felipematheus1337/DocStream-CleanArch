@@ -8,6 +8,7 @@ import org.docstream.domain.VendaDeCarro;
 import org.docstream.infra.mapper.VendaDeCarroMapper;
 import org.docstream.infra.persistence.VendaDeCarroEntity;
 import org.docstream.infra.persistence.VendaDeCarroRepository;
+import org.docstream.infra.service.FilePublisherService;
 import org.docstream.infra.service.SerializadorDeArquivosCSVService;
 
 import java.io.InputStream;
@@ -18,11 +19,13 @@ public class VendaDeCarroGatewayCSVImpl implements VendaDeCarroGatewayCSV  {
 
     private final VendaDeCarroRepository repository;
     private final SerializadorDeArquivosCSVService csvService;
+    private final FilePublisherService filePublisherService;
 
     @Inject
-    public VendaDeCarroGatewayCSVImpl(VendaDeCarroRepository repository, SerializadorDeArquivosCSVService csvService) {
+    public VendaDeCarroGatewayCSVImpl(VendaDeCarroRepository repository, SerializadorDeArquivosCSVService csvService, FilePublisherService filePublisherService) {
         this.repository = repository;
         this.csvService = csvService;
+        this.filePublisherService = filePublisherService;
     }
 
     @Override
@@ -39,6 +42,8 @@ public class VendaDeCarroGatewayCSVImpl implements VendaDeCarroGatewayCSV  {
                     .toList();
 
             repository.persist(entities);
+
+            filePublisherService.publish(inputStream);
 
         } catch(Exception e) {
             throw new RuntimeException("Falha ao serializar..", e);
